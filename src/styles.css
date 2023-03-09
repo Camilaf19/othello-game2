@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+
+:root {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: black;
+}
+
+body {
+  margin: 0px;
+  height: 100%;
+}
+.header-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 8em;
+  font-family: 'Righteous', cursive;
+  font-size: 1.8em;
+}
+.app-main {
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+}
+.board {
+  height: 33em;
+  width: 33em;
+  margin: 0em 4em;
+  border: solid rgb(255, 255, 255) 1px;
+  border-radius: 4px;
+  box-shadow: -1px 1px 20px -5px rgba(255, 255, 255, 0.555);
+}
+
+.rows {
+  display: flex;
+}
+.cols {
+  width: 4em;
+  height: 4em;
+  border: solid rgba(255, 255, 255, 0.733) 1px;
+  background-color: #008000;
+}
+
+.token-container {
+  display: flex;
+  height: 3.5em;
+  width: 3.5em;
+  margin: auto;
+}
+
+.token-black {
+  display: flex;
+  height: 3.5em;
+  width: 3.5em;
+  border-radius: 50%;
+  margin: auto;
+  background-color: black;
+  border: solid rgba(255, 255, 255, 0.329) 1px;
+}
+
+.token-white {
+  display: flex;
+  height: 3.5em;
+  width: 3.5em;
+  border-radius: 50%;
+  margin: auto;
+  background-color: white;
+}
+
+.token-selected {
+  display: flex;
+  height: 3.5em;
+  width: 3.5em;
+  margin: auto;
+  background-color: #22c722a2;
+  border-radius: 15px;
+  padding: 0.5em;
+  box-shadow: -1px 1px 15px -5px rgba(212, 211, 211, 0.555);
+}
+
+.aside-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0em 2em;
+}
+
+.turns-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+.tokens-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+.count-tokens {
+  text-align: center;
+  font-family: 'Questrial', sans-serif;
+  font-size: 1.6em;
+}
+ 
+p {
+  font-size: 1.5em;
+  margin: 0.7em 0em;
+  font-weight: bold;
+}
+
+.button-start {
+  background-color: black;
+  border: 1px solid rgba(255, 255, 255, 0.342);
+  width: 8.5em;
+  height: 2.8em;
+  font-size: 1.1em;
+  border-radius: 1.5em;
+  font-family: 'Questrial', sans-serif;
+  font-weight: 200;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.836);
+  box-shadow: -1px 1px 15px -5px #008000;
+  margin: auto;
+}
