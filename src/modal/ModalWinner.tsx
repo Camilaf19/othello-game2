@@ -8,10 +8,8 @@ export const ModalWinner = ({ winner, resetGame }:myProps) => {
     return (
       <section className='winner-modal'>
         <div className='body-modal'>
-          <header>
-            <button className="close-modal">X</button>
-          </header>
-          ¡The player {winner} has won the game Othello!
+            <button className="close-modal">x</button>
+            <h2 className="text-modal"> ¡The player {winner} has won the game Othello! </h2>
           <footer>
             <button  className='button-start' onClick={resetGame}>OK</button>
           </footer>

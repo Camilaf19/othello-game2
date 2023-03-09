@@ -5,7 +5,7 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.932);
   background-color: black;
 }
 
@@ -25,6 +25,7 @@ body {
   margin: 0px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .board {
   height: 33em;
@@ -83,15 +84,19 @@ body {
 }
 
 .aside-container {
+  width: 15em;
   display: flex;
   flex-direction: column;
-  margin: 0em 2em;
+  margin: 0em 1em;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
 }
 
 .turns-container {
   display: flex;
   justify-content: center;
-  gap: 1.5em;
+  gap: 1.8em;
 }
 
 .tokens-container {
@@ -101,13 +106,13 @@ body {
   gap: 2em;
 }
 
-.count-tokens {
+.name-tokens {
   text-align: center;
   font-family: 'Questrial', sans-serif;
   font-size: 1.6em;
 }
 
-p {
+.number-tokens {
   font-size: 1.5em;
   margin: 0.7em 0em;
   font-weight: bold;
@@ -118,16 +123,24 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.342);
   width: 8.5em;
   height: 2.8em;
-  font-size: 1em;
+  font-size: 1.1em;
   border-radius: 1.5em;
   font-family: 'Questrial', sans-serif;
   font-weight: 200;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.836);
+  color: rgba(255, 255, 255, 0.911);
   box-shadow: -1px 1px 15px -5px #008000;
-  margin: auto;
+  margin-top: 1.5em;
 }
 
+.button-start:hover {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  /*   background-color: #106810;
+  color: rgb(255, 255, 255);
+  */
+}
 .winner-modal {
   position: absolute;
   width: 100vw;
@@ -140,6 +153,7 @@ p {
 }
 
 .winner-modal .body-modal {
+  position: relative;
   background: #000000;
   height: 300px;
   width: 420px;
@@ -149,9 +163,25 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
   box-shadow: -1px 1px 15px -5px #008000;
+}
+
+.text-modal {
   font-family: 'Questrial', sans-serif;
   font-weight: 200;
-  font-size: 1.3em;
+  font-size: 1.7em;
+  text-align: center;
+  line-height: 1.3em;
+}
+
+.close-modal {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  border: none;
+  background-color: #000000;
+  color: rgba(255, 255, 255, 0.644);
+  font-size: 0.9em;
+  cursor: pointer;
+  font-weight: bold;
 }

@@ -13,7 +13,7 @@ function App() {
   const [whiteTokens, setWhiteTokens] = useState(32)
   const [blackTokens, setBlackTokens] = useState(32)
   const [winner, setWinner] = useState('')
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
 
 
   const handleStartGame = () => {
@@ -50,10 +50,10 @@ function App() {
   }
 
   useEffect(() => {
-    if (whiteTokens <= 20) {
+    if (whiteTokens <= 0) {
       setShow(true)
       setWinner('White')
-    } else if (blackTokens <= 20) {
+    } else if (blackTokens <= 0) {
       setShow(true)
       setWinner('Black')
     }

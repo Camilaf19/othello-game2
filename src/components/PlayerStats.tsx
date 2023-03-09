@@ -12,12 +12,12 @@ export const PlayerStats = ({
   return (
     <>
       <section className='tokens-container'>
-        <article className='count-tokens'>
-          <p>{blackTokens}</p>
+        <article className='name-tokens'>
+          <p className='number-tokens'>{blackTokens}</p>
           <span>Black</span>
         </article>
-        <article className='count-tokens'>
-          <p>{whiteTokens}</p>
+        <article className='name-tokens'>
+          <p className='number-tokens'>{whiteTokens}</p>
           <span>White</span>
         </article>
       </section>
@@ -25,7 +25,7 @@ export const PlayerStats = ({
         className='button-start'
         onClick={() => handleRestartGame()}
       >
-        Start / reset game
+        Start game
       </button>
     </>
   )
