@@ -62,7 +62,8 @@ export class Cell extends Board {
     ) {
       r += direction[0] //cambia a los valores adayacentes de la adyacente
       c += direction[1]
-      if (Board.cells[r][c] === currentPlayer) {
+
+      if (this.validateLimit(r, c) && Board.cells[r][c] === currentPlayer) {
         foundCurrentPlayerToken = true // se encontró una ficha del jugador actual
         break // se sale del ciclo
       }
@@ -70,12 +71,12 @@ export class Cell extends Board {
 
     // si se encontró una ficha del jugador actual, se actualiza la cadena
     if (foundCurrentPlayerToken) {
-      r = row + direction[0]
-      c = col + direction[1]
       if (Board.cells[this.rows][this.cols] !== this.currentPlayer) {
         this.flippedTokens++
         Board.cells[this.rows][this.cols] = this.currentPlayer //pintar el turno actual
       }
+      r = row + direction[0]
+      c = col + direction[1]
       while (
         this.validateLimit(r, c) &&
         Board.cells[r][c] === 3 - currentPlayer

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { PlayerStats } from './components/PlayerStats'
 import { TokenDisplay } from './components/TokenDisplay'
+import { ModalWinner } from './modal/ModalWinner'
 import { Board } from './classes/board'
 import { Cell } from './classes/cells'
 
+type winner = null | string
 function App() {
   const initialBoard = new Board(8, 8)
   const [board, setBoard] = useState(initialBoard)
@@ -11,13 +13,15 @@ function App() {
   const [turn, setTurn] = useState(1)
   const [whiteTokens, setWhiteTokens] = useState(32)
   const [blackTokens, setBlackTokens] = useState(32)
+  const [winner, setWinner] = useState('')
+  const [show, setShow] = useState(false)
 
   function handleClickBoard(irow: number, icol: number) {
     const selectedCell = new Cell(irow, icol, turn)
-    const cellValue = selectedCell.validateMove(board)
+    const isValidMove = selectedCell.validateMove(board)
     const tokensChanged = selectedCell.flippedTokens
 
-    const validMovements: Record<number, () => void> = {
+    const countTokens: Record<number, () => void> = {
       1: () => {
         setBlackTokens((prevBlackTokens) => prevBlackTokens - tokensChanged)
         setWhiteTokens((prevWhiteTokens) => prevWhiteTokens + tokensChanged - 1)
@@ -30,18 +34,35 @@ function App() {
       },
     }
 
-    if (cellValue === 0) {
+    if (isValidMove === 0) {
       setWhiteTokens(whiteTokens)
       setBlackTokens(blackTokens)
     } else {
-      validMovements[turn]()
+      countTokens[turn]()
+    }
+
+    if (blackTokens <= 25) {
+      setShow(true)
+      setWinner('Black')
+    } else if (whiteTokens <= 25) {
+      setShow(true)
+      setWinner('White')
     }
   }
 
-  function handleRestartGame() {
+  function handleStartGame() {
     setBoard(newBoard)
     setWhiteTokens(30)
     setBlackTokens(30)
+    setTurn(1)
+  }
+
+  function resetGameModal() {
+  /*   setBoard(initialBoard)
+    setWhiteTokens(32)
+    setBlackTokens(32) */
+    setWinner('')
+    setShow(false)
   }
 
   return (
@@ -91,8 +112,14 @@ function App() {
           <PlayerStats
             whiteTokens={whiteTokens}
             blackTokens={blackTokens}
-            handleRestartGame={handleRestartGame}
+            handleRestartGame={handleStartGame}
           />
+          {show && (
+            <ModalWinner
+              resetGame={resetGameModal}
+              winner={winner}
+            />
+          )}
         </aside>
       </main>
     </>
