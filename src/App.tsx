@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { PlayerStats } from './components/PlayerStats'
 import { TokenDisplay } from './components/TokenDisplay'
 import { ModalWinner } from './modal/ModalWinner'
 import { Board } from './classes/board'
 import { Cell } from './classes/cells'
 
-type winner = null | string
 function App() {
   const initialBoard = new Board(8, 8)
   const [board, setBoard] = useState(initialBoard)
@@ -14,9 +13,17 @@ function App() {
   const [whiteTokens, setWhiteTokens] = useState(32)
   const [blackTokens, setBlackTokens] = useState(32)
   const [winner, setWinner] = useState('')
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(true)
 
-  function handleClickBoard(irow: number, icol: number) {
+
+  const handleStartGame = () => {
+    setBoard(newBoard)
+    setWhiteTokens(30)
+    setBlackTokens(30)
+    setTurn(1)
+  }
+
+  const handleClickBoard = (irow: number, icol: number) => {
     const selectedCell = new Cell(irow, icol, turn)
     const isValidMove = selectedCell.validateMove(board)
     const tokensChanged = selectedCell.flippedTokens
@@ -40,27 +47,23 @@ function App() {
     } else {
       countTokens[turn]()
     }
+  }
 
-    if (blackTokens <= 25) {
-      setShow(true)
-      setWinner('Black')
-    } else if (whiteTokens <= 25) {
+  useEffect(() => {
+    if (whiteTokens <= 20) {
       setShow(true)
       setWinner('White')
+    } else if (blackTokens <= 20) {
+      setShow(true)
+      setWinner('Black')
     }
-  }
+  }, [blackTokens, whiteTokens])
 
-  function handleStartGame() {
-    setBoard(newBoard)
-    setWhiteTokens(30)
-    setBlackTokens(30)
-    setTurn(1)
-  }
 
-  function resetGameModal() {
-  /*   setBoard(initialBoard)
+  const resetGameModal = () => {
+    setBoard(initialBoard)
     setWhiteTokens(32)
-    setBlackTokens(32) */
+    setBlackTokens(32)
     setWinner('')
     setShow(false)
   }

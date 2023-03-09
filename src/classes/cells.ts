@@ -28,7 +28,6 @@ export class Cell extends Board {
     this.neighbors.forEach((direction) => {
       let row = this.rows + direction[0] // posicion adayacentes
       let col = this.cols + direction[1]
-      debugger
       if (this.validateLimit(row, col)) {
         if (Board.cells[row][col] === 3 - this.currentPlayer) {
           // la celda adyacente sea el oponente

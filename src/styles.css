@@ -128,7 +128,7 @@ p {
   margin: auto;
 }
 
-.winner {
+.winner-modal {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -139,7 +139,7 @@ p {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.winner .text {
+.winner-modal .body-modal {
   background: #000000;
   height: 300px;
   width: 420px;

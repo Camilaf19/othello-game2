@@ -6,10 +6,10 @@ interface myProps {
 export const ModalWinner = ({ winner, resetGame }:myProps) => {
 
     return (
-      <section className='winner'>
-        <div className='text'>
+      <section className='winner-modal'>
+        <div className='body-modal'>
           <header>
-            <button>X</button>
+            <button className="close-modal">X</button>
           </header>
           ¡The player {winner} has won the game Othello!
           <footer>
