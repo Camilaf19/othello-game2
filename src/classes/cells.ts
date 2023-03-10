@@ -26,32 +26,32 @@ export class Cell extends Board {
     if (Board.cells[this.rows][this.cols] !== 0) {
       isValid = false
     }
-    //recorre todas las direcciones adaycentes para encontrar una ficha del oponente
-    this.neighbors.forEach((direction) => {
-      let row = this.rows + direction[0]
-      let col = this.cols + direction[1]
+    else {
+      //recorre todas las direcciones adaycentes para encontrar una ficha del oponente
+      this.neighbors.forEach((direction) => {
+        let row = this.rows + direction[0]
+        let col = this.cols + direction[1]
 
-      if (this.validateLimit(row, col)) {
-        if (Board.cells[row][col] === 3 - this.currentPlayer) {
-          debugger
-
-          while (
-            this.validateLimit(row, col) &&
-            Board.cells[row][col] === 3 - this.currentPlayer
-          ) {
-            row += direction[0] //cambia a los valores adyacentes de la adyacente
-            col += direction[1]
-            if (
+        if (this.validateLimit(row, col)) {
+          if (Board.cells[row][col] === 3 - this.currentPlayer) {
+            while (
               this.validateLimit(row, col) &&
-              Board.cells[row][col] === this.currentPlayer
+              Board.cells[row][col] === 3 - this.currentPlayer
             ) {
-              isValid = true
-              break
+              row += direction[0] //cambia a los valores adyacentes de la adyacente
+              col += direction[1]
+              if (
+                this.validateLimit(row, col) &&
+                Board.cells[row][col] === this.currentPlayer
+              ) {
+                isValid = true
+                break
+              }
             }
           }
         }
-      }
-    })
+      })
+    }
     return isValid
   }
 
@@ -94,16 +94,17 @@ export class Cell extends Board {
   }
 
   checkAvailableMoves(currentPlayer: number, board: Board) {
-    let isAvailable = false
-    this.cells.forEach((row, rowIndex) => {
-      row.forEach((_, colIndex) => {
-        let cellxd = new Cell(rowIndex, colIndex, currentPlayer)
-        if (cellxd.validateMove(board)) {
+    let isAvailable = false // estado inicial
+
+    for (let rowIndex = 0; rowIndex < board.cells.length; rowIndex++) {
+      for (let colIndex = 0; colIndex < board.cells[rowIndex].length; colIndex++) {
+        let validateEachCell = new Cell(rowIndex, colIndex, currentPlayer)
+        if (validateEachCell.validateMove(board)) {
           isAvailable = true
-          return
+          return isAvailable
         }
-      })
-    })
+      }
+    }
     return isAvailable
   }
 }
