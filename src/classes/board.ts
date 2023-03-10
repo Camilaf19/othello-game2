@@ -1,5 +1,4 @@
 
-
 export class Board {
   rows: number
   cols: number

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { BoardComponent } from './components/BoardComponent'
 import { PlayerStats } from './components/PlayerStats'
 import { TokenDisplay } from './components/TokenDisplay'
 import { ModalWinner } from './modal/ModalWinner'
@@ -15,22 +16,20 @@ function App() {
   const [winner, setWinner] = useState('')
   const [show, setShow] = useState(false)
 
+  useEffect(() => {
+    if (whiteTokens <= 0 || blackTokens <= 0) {
+      const newWinner = turn === 1 ? 'White' : 'Black'
+      setWinner(newWinner)
+      setShow(true)
+    }
+  }, [blackTokens, whiteTokens, turn])
+
   const handleStartGame = () => {
     setBoard(newBoard)
     setWhiteTokens(30)
     setBlackTokens(30)
     setTurn(1)
   }
-
-    useEffect(() => {
-      if (whiteTokens <= 20) {
-        setShow(true)
-        setWinner('White')
-      } else if (blackTokens <= 20) {
-        setShow(true)
-        setWinner('Black')
-      }
-    }, [blackTokens, whiteTokens])
 
   const handleClickBoard = (irow: number, icol: number) => {
     const selectedCell = new Cell(irow, icol, turn)
@@ -39,7 +38,7 @@ function App() {
     const tokensChanged = selectedCell.flippedTokens
     const hasAvailableMoves = selectedCell.checkAvailableMoves(turn, board)
 
-    const countTokens: Record<number, () => void> = {
+    const updateTokens: Record<number, () => void> = {
       1: () => {
         setBlackTokens((prevBlackTokens) => prevBlackTokens - tokensChanged)
         setWhiteTokens((prevWhiteTokens) => prevWhiteTokens + tokensChanged - 1)
@@ -52,17 +51,24 @@ function App() {
       },
     }
 
+    updateDataTurn(isValidMove, hasAvailableMoves, updateTokens)
+  }
+
+  const updateDataTurn = (
+    isValidMove: boolean,
+    hasAvailableMoves: boolean,
+    updateTokens: Record<number, () => void>
+  ) => {
     if (!isValidMove) {
-      debugger
       setWhiteTokens(whiteTokens)
       setBlackTokens(blackTokens)
       if (!hasAvailableMoves) {
         setShow(true)
-        let newWinner = turn === 1 ? 'White' : 'Black'
+        const newWinner = turn === 1 ? 'White' : 'Black'
         setWinner(newWinner)
       }
     } else {
-      countTokens[turn]()
+      updateTokens[turn]()
     }
   }
 
@@ -80,33 +86,10 @@ function App() {
         <h1>Othello</h1>
       </header>
       <main className='app-main'>
-        <section className='board'>
-          {board.cells.map((row, irow) => {
-            return (
-              <section
-                key={irow}
-                className='rows'
-              >
-                {row.map((_, icol) => {
-                  return (
-                    <section
-                      key={icol}
-                      className='cols'
-                      onClick={() => handleClickBoard(irow, icol)}
-                    >
-                      {board.cells[irow][icol] === 1 && (
-                        <div className='token-black' />
-                      )}
-                      {board.cells[irow][icol] === 2 && (
-                        <div className='token-white' />
-                      )}
-                    </section>
-                  )
-                })}
-              </section>
-            )
-          })}
-        </section>
+        <BoardComponent
+          board={board}
+          handleClickBoard={handleClickBoard}
+        />
         <aside className='aside-container'>
           <section className='turns-container'>
             <TokenDisplay
