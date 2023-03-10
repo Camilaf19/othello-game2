@@ -1,3 +1,5 @@
+
+
 export class Board {
   rows: number
   cols: number
@@ -19,4 +21,6 @@ export class Board {
     newBoard.cells[4][4] = 2
     return newBoard
   }
+
+  
 }
