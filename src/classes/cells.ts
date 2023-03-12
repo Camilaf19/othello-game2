@@ -16,8 +16,13 @@ export class Cell extends Board {
   }
 
   //verificar los limites del tablero
-  validateLimit(row: number, col: number): boolean {
-    return row >= 0 && row < 8 && col >= 0 && col < 8
+  validateLimit(row: number, col: number, board:Board): boolean {
+    return (
+      row >= 0 &&
+      row < board.cells.length &&
+      col >= 0 &&
+      col < board.cells.length
+    )
   }
 
   validateMove(Board: Board) {
@@ -33,16 +38,16 @@ export class Cell extends Board {
         let col = this.cols + direction[1]
  
         //verifica si es un movimiento que cumpla con las condiciones
-        if (this.validateLimit(row, col)) {
+        if (this.validateLimit(row, col, Board)) {
           if (Board.cells[row][col] === 3 - this.currentPlayer) {
             while (
-              this.validateLimit(row, col) &&
+              this.validateLimit(row, col, Board) &&
               Board.cells[row][col] === 3 - this.currentPlayer
             ) {
               row += direction[0] 
               col += direction[1]
               if (
-                this.validateLimit(row, col) &&
+                this.validateLimit(row, col, Board) &&
                 Board.cells[row][col] === this.currentPlayer // verifica al final de la cadena que haya una ficha actual
               ) {
                 isValid = true
@@ -65,14 +70,14 @@ export class Cell extends Board {
         let c = col + direction[1]
 
         while (
-          this.validateLimit(r, c) &&
+          this.validateLimit(r, c, Board) &&
           Board.cells[r][c] === 3 - currentPlayer
         ) {
           r += direction[0]
           c += direction[1]
 
           //encuentra la ficha del actual al final de la cadena
-          if (this.validateLimit(r, c) && Board.cells[r][c] === currentPlayer) {
+          if (this.validateLimit(r, c, Board) && Board.cells[r][c] === currentPlayer) {
             if (Board.cells[this.rows][this.cols] !== this.currentPlayer) {
               this.flippedTokens++
               Board.cells[this.rows][this.cols] = this.currentPlayer
@@ -81,7 +86,7 @@ export class Cell extends Board {
             c = col + direction[1]
 
             while (
-              this.validateLimit(r, c) &&
+              this.validateLimit(r, c, Board) &&
               Board.cells[r][c] === 3 - currentPlayer
             ) {
               Board.cells[r][c] = currentPlayer // actualiza el valor de la celda que se hizo click

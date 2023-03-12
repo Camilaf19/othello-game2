@@ -6,15 +6,18 @@ import { ModalWinner } from './modal/ModalWinner'
 import { Board } from './classes/board'
 import { Cell } from './classes/cells'
 
+
 function App() {
   const initialBoard = new Board(8, 8)
   const [board, setBoard] = useState(initialBoard)
   const newBoard = board.initBoard()
   const [turn, setTurn] = useState(1)
-  const [whiteTokens, setWhiteTokens] = useState(32)
-  const [blackTokens, setBlackTokens] = useState(32)
+  const [sizeBoard, setSizeBoard] = useState(8)
+  const [whiteTokens, setWhiteTokens] = useState((sizeBoard * sizeBoard) / 2)
+  const [blackTokens, setBlackTokens] = useState((sizeBoard * sizeBoard) / 2)
   const [winner, setWinner] = useState('')
   const [show, setShow] = useState(false)
+ 
 
   useEffect(() => {
     if (whiteTokens <= 0 || blackTokens <= 0) {
@@ -24,10 +27,20 @@ function App() {
     }
   }, [blackTokens, whiteTokens, turn])
 
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const valueSelected = parseInt(event.target.value)
+    setSizeBoard(valueSelected)
+    setBoard(new Board(valueSelected, valueSelected))
+    const initTokens = (valueSelected * valueSelected) / 2
+    setBlackTokens(initTokens)
+    setWhiteTokens(initTokens)
+  }
+
+  debugger
   const handleStartGame = () => {
     setBoard(newBoard)
-    setWhiteTokens(30)
-    setBlackTokens(30)
+    setWhiteTokens(whiteTokens - 2 )
+    setBlackTokens(blackTokens - 2 )
     setTurn(1)
   }
 
@@ -50,7 +63,7 @@ function App() {
         setTurn(1)
       },
     }
-
+debugger
     updateDataTurn(isValidMove, hasAvailableMoves, updateTokens)
   }
 
@@ -91,6 +104,18 @@ function App() {
           handleClickBoard={handleClickBoard}
         />
         <aside className='aside-container'>
+          <p>Choose the size of the board for starting the game:</p>
+          <form>
+            <select
+              name='size-board'
+              onChange={handleChange}
+            >
+              <option value={0}>Select an option</option>
+              <option value={6}>6 x 6</option>
+              <option value={8}>8 x 8</option>
+              <option value={10}>10 x 10</option>
+            </select>
+          </form>
           <section className='turns-container'>
             <TokenDisplay
               className='token-black'
