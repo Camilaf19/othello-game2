@@ -2,10 +2,13 @@ import { Board } from "../classes/board"
 
 interface myProps {
   board: Board
-  handleClickBoard:Function,
+  handleClickBoard: Function,
+
 }
 
-export const BoardComponent = ({board, handleClickBoard }: myProps) => {
+export const BoardComponent = ({ board, handleClickBoard }: myProps) => {
+
+
   return (
     <section className='board'>
       {board.cells.map((row, irow) => {

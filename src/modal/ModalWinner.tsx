@@ -4,7 +4,6 @@ interface myProps {
 }
 
 export const ModalWinner = ({ winner, resetGameModal }:myProps) => {
-
   
     return (
       <section className='winner-modal'>
@@ -15,12 +14,12 @@ export const ModalWinner = ({ winner, resetGameModal }:myProps) => {
           >
             x
           </button>
-          <h2 className='text-modal'>
-            ¡The player {winner} has won the game Othello!{' '}
-          </h2>
+          <h3 className='text-modal'>
+            ¡The player {winner} has won the game Othello!
+          </h3>
           <footer>
             <button
-              className='button-start'
+              className='buttons'
               onClick={resetGameModal}
             >
               OK

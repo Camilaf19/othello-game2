@@ -6,7 +6,6 @@ import { ModalWinner } from './modal/ModalWinner'
 import { Board } from './classes/board'
 import { Cell } from './classes/cells'
 
-
 function App() {
   const initialBoard = new Board(8, 8)
   const [board, setBoard] = useState(initialBoard)
@@ -17,7 +16,6 @@ function App() {
   const [blackTokens, setBlackTokens] = useState((sizeBoard * sizeBoard) / 2)
   const [winner, setWinner] = useState('')
   const [show, setShow] = useState(false)
- 
 
   useEffect(() => {
     if (whiteTokens <= 0 || blackTokens <= 0) {
@@ -36,11 +34,10 @@ function App() {
     setWhiteTokens(initTokens)
   }
 
-  debugger
   const handleStartGame = () => {
     setBoard(newBoard)
-    setWhiteTokens(whiteTokens - 2 )
-    setBlackTokens(blackTokens - 2 )
+    setWhiteTokens(whiteTokens - 2)
+    setBlackTokens(blackTokens - 2)
     setTurn(1)
   }
 
@@ -49,7 +46,6 @@ function App() {
     const isValidMove = selectedCell.validateMove(board)
     selectedCell.createChain(irow, icol, turn, board)
     const tokensChanged = selectedCell.flippedTokens
-    const hasAvailableMoves = selectedCell.checkAvailableMoves(turn, board)
 
     const updateTokens: Record<number, () => void> = {
       1: () => {
@@ -63,19 +59,19 @@ function App() {
         setTurn(1)
       },
     }
-debugger
-    updateDataTurn(isValidMove, hasAvailableMoves, updateTokens)
+    debugger
+    updateDataTurn(isValidMove, selectedCell, updateTokens)
   }
 
   const updateDataTurn = (
     isValidMove: boolean,
-    hasAvailableMoves: boolean,
+    selectedCell: Cell,
     updateTokens: Record<number, () => void>
   ) => {
     if (!isValidMove) {
       setWhiteTokens(whiteTokens)
       setBlackTokens(blackTokens)
-      if (!hasAvailableMoves) {
+      if (!selectedCell.checkAvailableMoves(turn, board)) {
         setShow(true)
         const newWinner = turn === 1 ? 'White' : 'Black'
         setWinner(newWinner)
@@ -98,24 +94,22 @@ debugger
       <header className='header-app'>
         <h1>Othello</h1>
       </header>
-      <main className='app-main'>
+      <main className='main-app'>
         <BoardComponent
           board={board}
           handleClickBoard={handleClickBoard}
         />
         <aside className='aside-container'>
-          <p>Choose the size of the board for starting the game:</p>
-          <form>
-            <select
-              name='size-board'
-              onChange={handleChange}
-            >
-              <option value={0}>Select an option</option>
-              <option value={6}>6 x 6</option>
-              <option value={8}>8 x 8</option>
-              <option value={10}>10 x 10</option>
-            </select>
-          </form>
+          <h2 className='title-aside'>
+            Choose the size of the board to start the game:
+          </h2>
+          <select className='select' onChange={handleChange}>
+            <option value={0}>Select an option</option>
+            <option value={6}>6 x 6</option>
+            <option value={8}>8 x 8</option>
+            <option value={10}>10 x 10</option>
+          </select>
+
           <section className='turns-container'>
             <TokenDisplay
               className='token-black'
@@ -129,15 +123,20 @@ debugger
           <PlayerStats
             whiteTokens={whiteTokens}
             blackTokens={blackTokens}
-            handleRestartGame={handleStartGame}
           />
-          {show && (
-            <ModalWinner
-              resetGameModal={resetGameModal}
-              winner={winner}
-            />
-          )}
+          <button
+            className='buttons'
+            onClick={handleStartGame}
+          >
+            Start game
+          </button>
         </aside>
+        {show && (
+          <ModalWinner
+            resetGameModal={resetGameModal}
+            winner={winner}
+          />
+        )}
       </main>
     </>
   )

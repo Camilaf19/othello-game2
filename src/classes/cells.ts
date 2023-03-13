@@ -41,17 +41,14 @@ export class Cell extends Board {
         if (this.validateLimit(row, col, Board)) {
           if (Board.cells[row][col] === 3 - this.currentPlayer) {
             while (
-              this.validateLimit(row, col, Board) &&
-              Board.cells[row][col] === 3 - this.currentPlayer
-            ) {
+              this.validateLimit(row, col, Board) && Board.cells[row][col] === 3 - this.currentPlayer) {
               row += direction[0] 
               col += direction[1]
               if (
-                this.validateLimit(row, col, Board) &&
-                Board.cells[row][col] === this.currentPlayer // verifica al final de la cadena que haya una ficha actual
-              ) {
+                this.validateLimit(row, col, Board) && Board.cells[row][col] === this.currentPlayer ) {
+                // verifica al final de la cadena que haya una ficha actual
                 isValid = true
-                break
+                break;
               }
             }
           }
@@ -64,7 +61,7 @@ export class Cell extends Board {
   createChain(row: number, col: number, currentPlayer: number, Board: Board) {
     //si es un movimiento valido recorre la cadena y cambia los valores de los tokens
     if (this.validateMove(Board)) {
-    
+    debugger
       this.neighbors.forEach((direction) => {
         let r = row + direction[0] 
         let c = col + direction[1]
@@ -78,18 +75,19 @@ export class Cell extends Board {
 
           //encuentra la ficha del actual al final de la cadena
           if (this.validateLimit(r, c, Board) && Board.cells[r][c] === currentPlayer) {
+
             if (Board.cells[this.rows][this.cols] !== this.currentPlayer) {
               this.flippedTokens++
-              Board.cells[this.rows][this.cols] = this.currentPlayer
+              Board.cells[this.rows][this.cols] = this.currentPlayer // actualiza el valor de la celda que se hizo click
             }
-            r = row + direction[0] //se devuelve en la iteración ya que puede haber otra cadena en otra dirección
+            r = row + direction[0] 
             c = col + direction[1]
 
             while (
               this.validateLimit(r, c, Board) &&
               Board.cells[r][c] === 3 - currentPlayer
             ) {
-              Board.cells[r][c] = currentPlayer // actualiza el valor de la celda que se hizo click
+              Board.cells[r][c] = currentPlayer // actualiza el valor de las celdas
               this.flippedTokens++
               r += direction[0]
               c += direction[1]

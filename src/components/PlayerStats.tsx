@@ -1,13 +1,11 @@
 interface myProps {
   blackTokens: number
   whiteTokens: number
-  handleRestartGame: () => void
 }
 
 export const PlayerStats = ({
   blackTokens,
   whiteTokens,
-  handleRestartGame,
 }: myProps) => {
   return (
     <>
@@ -21,12 +19,6 @@ export const PlayerStats = ({
           <span>White</span>
         </article>
       </section>
-      <button
-        className='button-start'
-        onClick={() => handleRestartGame()}
-      >
-        Start game
-      </button>
     </>
   )
 }
