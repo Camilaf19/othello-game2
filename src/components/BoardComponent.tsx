@@ -3,11 +3,9 @@ import { Board } from "../classes/board"
 interface myProps {
   board: Board
   handleClickBoard: Function,
-
 }
 
 export const BoardComponent = ({ board, handleClickBoard }: myProps) => {
-
 
   return (
     <section className='board'>

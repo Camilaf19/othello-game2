@@ -1,10 +1,8 @@
 
 export class Board {
-  rows: number
-  cols: number
   cells: number[][]
 
-  constructor(rows: number, cols: number) {
+  constructor(public rows: number, public cols: number) {
     this.rows = rows
     this.cols = cols
     this.cells = Array(this.rows)

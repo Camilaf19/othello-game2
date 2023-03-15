@@ -10,26 +10,30 @@ function App() {
   const initialBoard = new Board(8, 8)
   const [board, setBoard] = useState(initialBoard)
   const newBoard = board.initBoard()
+
   const [turn, setTurn] = useState(1)
   const [sizeBoard, setSizeBoard] = useState(8)
+  const [winner, setWinner] = useState('')
+  const [showModal, setShowModal] = useState(false)
+
   const [whiteTokens, setWhiteTokens] = useState((sizeBoard * sizeBoard) / 2)
   const [blackTokens, setBlackTokens] = useState((sizeBoard * sizeBoard) / 2)
-  const [winner, setWinner] = useState('')
-  const [show, setShow] = useState(false)
+  const [isCheckedDiagonal, setIsCheckedDiagonal] = useState(false)
+
+  const newWinner = turn === 1 ? 'White' : 'Black'
 
   useEffect(() => {
     if (whiteTokens <= 0 || blackTokens <= 0) {
-      const newWinner = turn === 1 ? 'White' : 'Black'
       setWinner(newWinner)
-      setShow(true)
+      setShowModal(true)
     }
-  }, [blackTokens, whiteTokens, turn])
+  }, [blackTokens, whiteTokens, turn, newWinner])
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const valueSelected = parseInt(event.target.value)
-    setSizeBoard(valueSelected)
-    setBoard(new Board(valueSelected, valueSelected))
-    const initTokens = (valueSelected * valueSelected) / 2
+  const handleChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSize = parseInt(event.target.value)
+    setSizeBoard(newSize)
+    setBoard(new Board(newSize, newSize))
+    const initTokens = (newSize * newSize) / 2
     setBlackTokens(initTokens)
     setWhiteTokens(initTokens)
   }
@@ -42,7 +46,7 @@ function App() {
   }
 
   const handleClickBoard = (irow: number, icol: number) => {
-    const selectedCell = new Cell(irow, icol, turn)
+    const selectedCell = new Cell(irow, icol, turn, isCheckedDiagonal)
     const isValidMove = selectedCell.validateMove(board)
     selectedCell.createChain(irow, icol, turn, board)
     const tokensChanged = selectedCell.flippedTokens
@@ -50,7 +54,7 @@ function App() {
     const updateTokens: Record<number, () => void> = {
       1: () => {
         setBlackTokens((prevBlackTokens) => prevBlackTokens - tokensChanged)
-        setWhiteTokens((prevWhiteTokens) => prevWhiteTokens + tokensChanged - 1)
+        setWhiteTokens((prevWhiteTokens) => prevWhiteTokens + tokensChanged -1)
         setTurn(2)
       },
       2: () => {
@@ -59,7 +63,7 @@ function App() {
         setTurn(1)
       },
     }
-    debugger
+
     updateDataTurn(isValidMove, selectedCell, updateTokens)
   }
 
@@ -72,8 +76,7 @@ function App() {
       setWhiteTokens(whiteTokens)
       setBlackTokens(blackTokens)
       if (!selectedCell.checkAvailableMoves(turn, board)) {
-        setShow(true)
-        const newWinner = turn === 1 ? 'White' : 'Black'
+        setShowModal(!showModal)
         setWinner(newWinner)
       }
     } else {
@@ -83,10 +86,14 @@ function App() {
 
   const resetGameModal = () => {
     setBoard(initialBoard)
-    setWhiteTokens(32)
-    setBlackTokens(32)
+    setWhiteTokens((sizeBoard * sizeBoard) / 2)
+    setBlackTokens((sizeBoard * sizeBoard) / 2)
     setWinner('')
-    setShow(false)
+    setShowModal(false)
+  }
+
+  const onChangeCheckDiagonal = () => {
+    setIsCheckedDiagonal(!isCheckedDiagonal)
   }
 
   return (
@@ -103,21 +110,31 @@ function App() {
           <h2 className='title-aside'>
             Choose the size of the board to start the game:
           </h2>
-          <select className='select' onChange={handleChange}>
+          <select
+            className='select'
+            onChange={handleChangeSelect}
+          >
             <option value={0}>Select an option</option>
             <option value={6}>6 x 6</option>
             <option value={8}>8 x 8</option>
             <option value={10}>10 x 10</option>
           </select>
-
+          <section className='check-diagonal'>
+            <input
+              type='checkbox'
+              checked={isCheckedDiagonal}
+              onChange={onChangeCheckDiagonal}
+            />
+            Allow diagonal moves
+          </section>
           <section className='turns-container'>
             <TokenDisplay
               className='token-black'
-              isSelected={turn === 1}
+              isChanged={turn === 1}
             />
             <TokenDisplay
               className='token-white'
-              isSelected={turn === 2}
+              isChanged={turn === 2}
             />
           </section>
           <PlayerStats
@@ -131,7 +148,7 @@ function App() {
             Start game
           </button>
         </aside>
-        {show && (
+        {showModal && (
           <ModalWinner
             resetGameModal={resetGameModal}
             winner={winner}

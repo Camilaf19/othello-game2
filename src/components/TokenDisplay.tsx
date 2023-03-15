@@ -1,10 +1,10 @@
 interface myProps {
-  isSelected: boolean
+  isChanged: boolean
   className: string
 }
 
-export const TokenDisplay = ({ isSelected, className: classname }: myProps) => {
-  const classNameSelected = isSelected ? 'token-selected' : 'token-container'
+export const TokenDisplay = ({ isChanged, className: classname }: myProps) => {
+  const classNameSelected = isChanged ? 'token-selected' : 'token-container'
   return (
     <>
       <section className={classNameSelected}>
