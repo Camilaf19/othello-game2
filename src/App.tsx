@@ -22,13 +22,15 @@ function App() {
 
   const newWinner = turn === 1 ? 'White' : 'Black'
 
+  // verify when any player does not have more tokens
   useEffect(() => {
-    if (whiteTokens <= 0 || blackTokens <= 0) {
+    if (whiteTokens <= 10 || blackTokens <= 10) {
       setWinner(newWinner)
       setShowModal(true)
     }
   }, [blackTokens, whiteTokens, turn, newWinner])
 
+  //change the size of the board according to the select value
   const handleChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newSize = parseInt(event.target.value)
     setSizeBoard(newSize)
@@ -38,23 +40,27 @@ function App() {
     setWhiteTokens(initTokens)
   }
 
+  //start the game and it update the new board, the first turn and substract the tokens that are already in play
   const handleStartGame = () => {
     setBoard(newBoard)
-    setWhiteTokens(whiteTokens - 2)
-    setBlackTokens(blackTokens - 2)
+    const startTokens = (sizeBoard * sizeBoard) / 2 - 2
+    setWhiteTokens(startTokens)
+    setBlackTokens(startTokens)
     setTurn(1)
   }
 
+  //creates the cell instance to validate moves and create the chain 
   const handleClickBoard = (irow: number, icol: number) => {
     const selectedCell = new Cell(irow, icol, turn, isCheckedDiagonal)
     const isValidMove = selectedCell.validateMove(board)
     selectedCell.createChain(irow, icol, turn, board)
     const tokensChanged = selectedCell.flippedTokens
 
+    //it updates the values of the states, subtract and add the number of tokens for each player
     const updateTokens: Record<number, () => void> = {
       1: () => {
         setBlackTokens((prevBlackTokens) => prevBlackTokens - tokensChanged)
-        setWhiteTokens((prevWhiteTokens) => prevWhiteTokens + tokensChanged -1)
+        setWhiteTokens((prevWhiteTokens) => prevWhiteTokens + tokensChanged - 1)
         setTurn(2)
       },
       2: () => {
@@ -67,11 +73,9 @@ function App() {
     updateDataTurn(isValidMove, selectedCell, updateTokens)
   }
 
-  const updateDataTurn = (
-    isValidMove: boolean,
-    selectedCell: Cell,
-    updateTokens: Record<number, () => void>
-  ) => {
+  const updateDataTurn = (isValidMove: boolean,selectedCell: Cell, updateTokens: Record<number, () => void>) => {
+
+    //if is not a valid move, it checks if there are more moves available on the board
     if (!isValidMove) {
       setWhiteTokens(whiteTokens)
       setBlackTokens(blackTokens)
@@ -84,6 +88,7 @@ function App() {
     }
   }
 
+  //after the game finished, reset the game
   const resetGameModal = () => {
     setBoard(initialBoard)
     setWhiteTokens((sizeBoard * sizeBoard) / 2)
@@ -92,6 +97,7 @@ function App() {
     setShowModal(false)
   }
 
+  //set the state when the checkbox is check
   const onChangeCheckDiagonal = () => {
     setIsCheckedDiagonal(!isCheckedDiagonal)
   }

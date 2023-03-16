@@ -2,6 +2,7 @@
 export class Board {
   cells: number[][]
 
+  //two-dimensional matrix with rows and cols 
   constructor(public rows: number, public cols: number) {
     this.rows = rows
     this.cols = cols
@@ -10,18 +11,18 @@ export class Board {
       .map(() => Array(this.cols).fill(0))
   }
 
+  // method that starts the game with the 4 tokens in the center
   initBoard(): Board {
     const newBoard = new Board(this.rows, this.cols)
 
-    const centerRow = Math.floor(this.rows / 2)
-    const centerCol = Math.floor(this.cols / 2)
+    const centerRow = this.rows / 2
+    const centerCol = this.cols / 2
 
-    newBoard.cells[centerRow][centerCol] = 2
-    newBoard.cells[centerRow - 1][centerCol] = 1
-    newBoard.cells[centerRow][centerCol - 1] = 1
-    newBoard.cells[centerRow - 1][centerCol - 1] = 2
+    newBoard.cells[centerRow][centerCol] = 2 // arriba izquierda
+    newBoard.cells[centerRow - 1][centerCol] = 1 //abajo iziquierda
+    newBoard.cells[centerRow][centerCol - 1] = 1 //arriba derecha
+    newBoard.cells[centerRow - 1][centerCol - 1] = 2 //abajo derecha
 
     return newBoard
   }
-  
 }
