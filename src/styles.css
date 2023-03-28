@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+
+:root {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.932);
+  background-color: black;
+  font-family: 'Questrial', sans-serif;
+}
+
+body {
+  margin: 0px;
+  height: 100%;
+}
+.header-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 8em;
+  font-family: 'Righteous', cursive;
+  font-size: 1.8em;
+}
+.main-app {
+  margin: 0px;
+  padding-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.board {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5em 4em;
+  border: solid rgb(255, 255, 255) 1px;
+  border-radius: 4px;
+  box-shadow: -1px 1px 20px -5px rgba(255, 255, 255, 0.555);
+}
+
+.rows {
+  display: flex;
+}
+.cols {
+  width: 4em;
+  height: 4em;
+  border: solid rgba(255, 255, 255, 0.733) 1px;
+  background-color: #008000;
+}
+
+.token-container {
+  display: flex;
+  height: 3.5em;
+  width: 3.5em;
+  margin: auto;
+}
+
+.token-black {
+  display: flex;
+  height: 3.5em;
+  width: 3.5em;
+  border-radius: 50%;
+  margin: auto;
+  background-color: black;
+  border: solid rgba(255, 255, 255, 0.329) 1px;
+}
+
+.token-white {
+  display: flex;
+  height: 3.5em;
+  width: 3.5em;
+  border-radius: 50%;
+  margin: auto;
+  background-color: white;
+}
+
+.token-selected {
+  display: flex;
+  height: 3.5em;
+  width: 3.5em;
+  margin: auto;
+  background-color: #22c722a2;
+  border-radius: 15px;
+  padding: 0.5em;
+  box-shadow: -1px 1px 15px -5px rgba(212, 211, 211, 0.555);
+}
+
+.aside-container {
+  width: 15em;
+  display: flex;
+  flex-direction: column;
+  margin: 0em 0.5em;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+}
+
+.title-aside {
+  text-align: center;
+  font-weight: 200;
+  margin: 0em;
+  font-size: 1.3em;
+}
+
+.select {
+width: 12em;
+height: 1.8em;
+border-radius: 0.5em;
+text-align: center;
+background-color: #000000;
+color: white;
+font-size: 1em;
+font-family: 'Questrial', sans-serif;
+}
+
+.check-diagonal {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+  font-size: 1.1em;
+}
+
+.turns-container {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+}
+
+.tokens-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4em;
+}
+
+.name-tokens {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.number-tokens {
+  font-size: 1.5em;
+  margin: 0.7em 0em;
+  font-weight: bold;
+}
+
+.buttons {
+  background-color: black;
+  border: 1px solid rgba(255, 255, 255, 0.342);
+  width: 8.5em;
+  height: 2.8em;
+  font-size: 1.1em;
+  border-radius: 1.5em;
+  font-family: 'Questrial', sans-serif;
+  font-weight: 200;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.911);
+  box-shadow: -1px 1px 15px -5px #008000;
+  margin-top: 1em;
+}
+
+.buttons:hover {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+}
+.winner-modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  right: 1.5em;
+  display: grid;
+  place-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.winner-modal .body-modal {
+  position: relative;
+  background: #000000;
+  height: 300px;
+  width: 420px;
+  border: 2px solid #ccfdcc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: -1px 1px 15px -5px #008000;
+}
+
+.text-modal {
+  font-family: 'Questrial', sans-serif;
+  font-weight: 200;
+  font-size: 1.7em;
+  text-align: center;
+  line-height: 1.3em;
+}
+
+.close-modal {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  border: none;
+  background-color: #000000;
+  color: rgba(255, 255, 255, 0.644);
+  font-size: 0.9em;
+  cursor: pointer;
+  font-weight: bold;
+}
+
